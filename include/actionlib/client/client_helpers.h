@@ -268,6 +268,9 @@ private:
   void setCommState(const CommState::StateEnum & state);
   const actionlib_msgs::GoalStatus * findGoalStatus(
     const std::vector<actionlib_msgs::GoalStatus> & status_vec) const;
+  // Debugging
+  bool is_waiting_for_result_;
+  ros::Time waiting_for_result_start_time_;
 };
 
 }  // namespace actionlib

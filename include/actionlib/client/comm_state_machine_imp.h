@@ -54,6 +54,7 @@ CommStateMachine<ActionSpec>::CommStateMachine(const ActionGoalConstPtr & action
   transition_cb_ = transition_cb;
   feedback_cb_ = feedback_cb;
   // transitionToState( CommState::WAITING_FOR_GOAL_ACK );
+  is_waiting_for_result_ = false;
 }
 
 template<class ActionSpec>
@@ -173,6 +174,25 @@ void CommStateMachine<ActionSpec>::updateStatus(GoalHandleT & gh,
   //   Thus, we want to ignore all status that we get after we're done, because it is irrelevant. (See trac #2721)
   if (state_ == CommState::DONE) {
     return;
+  }
+
+  // Added by Thomas
+  if ( (state_.state_ == CommState::WAITING_FOR_RESULT) &&
+       !is_waiting_for_result_ )
+  {
+    waiting_for_result_start_time_ = ros::Time::now();
+    is_waiting_for_result_ = true;
+  }
+  else if ( (state_.state_ != CommState::WAITING_FOR_RESULT) &&
+            is_waiting_for_result_ )
+  {
+    is_waiting_for_result_ = false;
+  }
+
+  if (is_waiting_for_result_)
+  {
+    bool too_long = (ros::Time::now() - waiting_for_result_start_time_) > ros::Duration(2.0);
+    ROS_ERROR_STREAM_COND(too_long, "!!! Action client has been waiting for result for more than 2s....");
   }
 
   if (goal_status) {
