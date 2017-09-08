@@ -192,7 +192,7 @@ void ActionServer<ActionSpec>::publishResult(const actionlib_msgs::GoalStatus & 
   ar->header.stamp = ros::Time::now();
   ar->status = status;
   ar->result = result;
-  ROS_DEBUG_NAMED("actionlib", "Publishing result for goal with id: %s and stamp: %.2f",
+  ROS_INFO_NAMED("actionlib", "Publishing result for goal with id: %s and stamp: %.2f",
     status.goal_id.id.c_str(), status.goal_id.stamp.toSec());
   result_pub_.publish(ar);
   publishStatus();

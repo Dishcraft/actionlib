@@ -97,8 +97,9 @@ void CommStateMachine<ActionSpec>::setCommState(const CommState::StateEnum & sta
 template<class ActionSpec>
 void CommStateMachine<ActionSpec>::setCommState(const CommState & state)
 {
-  ROS_DEBUG_NAMED("actionlib", "Transitioning CommState from %s to %s",
-    state_.toString().c_str(), state.toString().c_str());
+  ROS_INFO_STREAM_NAMED("actionlib", "Goal: " << action_goal_->goal_id
+                                              << ". Transitioning CommState from " <<  state_.toString()
+                                              << " to " << state.toString());
   state_ = state;
 }
 

@@ -68,7 +68,7 @@ void ServerGoalHandle<ActionSpec>::setAccepted(const std::string & text)
     return;
   }
 
-  ROS_DEBUG_NAMED("actionlib", "Accepting goal, id: %s, stamp: %.2f",
+  ROS_INFO_NAMED("actionlib", "Accepting goal, id: %s, stamp: %.2f",
     getGoalID().id.c_str(), getGoalID().stamp.toSec());
   if (goal_) {
     boost::recursive_mutex::scoped_lock lock(as_->lock_);
@@ -230,7 +230,7 @@ void ServerGoalHandle<ActionSpec>::setSucceeded(const Result & result, const std
     return;
   }
 
-  ROS_DEBUG_NAMED("actionlib", "Setting status to succeeded on goal, id: %s, stamp: %.2f",
+  ROS_INFO_NAMED("actionlib", "Setting status to succeeded on goal, id: %s, stamp: %.2f",
     getGoalID().id.c_str(), getGoalID().stamp.toSec());
   if (goal_) {
     boost::recursive_mutex::scoped_lock lock(as_->lock_);

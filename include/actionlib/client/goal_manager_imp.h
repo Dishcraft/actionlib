@@ -75,6 +75,7 @@ ClientGoalHandle<ActionSpec> GoalManager<ActionSpec>::initGoal(const Goal & goal
     list_.add(comm_state_machine, boost::bind(&GoalManagerT::listElemDeleter, this, _1), guard_);
 
   if (send_goal_func_) {
+    ROS_INFO_STREAM("Sending goal: " << action_goal->goal_id);
     send_goal_func_(action_goal);
   } else {
     ROS_WARN_NAMED("actionlib",
