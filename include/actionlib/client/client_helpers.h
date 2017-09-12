@@ -98,6 +98,8 @@ public:
   typedef ManagedList<boost::shared_ptr<CommStateMachine<ActionSpec> > > ManagedListT;
   ManagedListT list_;
 
+  ros::Subscriber* p_result_subscriber_;
+
 private:
   SendGoalFunc send_goal_func_;
   CancelFunc cancel_func_;
@@ -248,6 +250,9 @@ public:
   void transitionToState(GoalHandleT & gh, const CommState::StateEnum & next_state);
   void transitionToState(GoalHandleT & gh, const CommState & next_state);
   void processLost(GoalHandleT & gh);
+
+  // Debugging
+  ros::Subscriber* p_result_subscriber_;
 
 private:
   CommStateMachine();

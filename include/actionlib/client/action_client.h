@@ -232,6 +232,8 @@ private:
     result_sub_ = queue_subscribe("result", static_cast<uint32_t>(sub_queue_size),
         &ActionClientT::resultCb, this, queue);
 
+    manager_.p_result_subscriber_ = &result_sub_;
+
     connection_monitor_.reset(new ConnectionMonitor(feedback_sub_, result_sub_));
 
     // Start publishers and subscribers

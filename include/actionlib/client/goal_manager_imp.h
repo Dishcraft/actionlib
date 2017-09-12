@@ -69,6 +69,7 @@ ClientGoalHandle<ActionSpec> GoalManager<ActionSpec>::initGoal(const Goal & goal
   boost::shared_ptr<CommStateMachineT> comm_state_machine(new CommStateMachineT(action_goal,
     transition_cb,
     feedback_cb));
+  comm_state_machine->p_result_subscriber_ = p_result_subscriber_;
 
   boost::recursive_mutex::scoped_lock lock(list_mutex_);
   typename ManagedListT::Handle list_handle =

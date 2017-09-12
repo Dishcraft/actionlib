@@ -181,6 +181,12 @@ void CommStateMachine<ActionSpec>::updateStatus(GoalHandleT & gh,
   if ( (state_.state_ == CommState::WAITING_FOR_RESULT) &&
        !is_waiting_for_result_ )
   {
+    if (p_result_subscriber_ != NULL)
+    {
+      uint32_t num_publishers = p_result_subscriber_->getNumPublishers();
+      ROS_ERROR_STREAM_COND(num_publishers == 0, "!!! Waiting for result but subscriber does not have any publisher...");
+    }
+
     waiting_for_result_start_time_ = ros::Time::now();
     is_waiting_for_result_ = true;
   }
